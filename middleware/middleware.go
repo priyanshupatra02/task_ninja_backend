@@ -75,7 +75,7 @@ func GetAllTasks(w http.ResponseWriter, r *http.Request) {
 
 // controllers 👇🏻
 func CreateATask(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "POST")
 	w.Header().Set("Access-Control-Allow-Header", "Content-Type")
@@ -83,10 +83,10 @@ func CreateATask(w http.ResponseWriter, r *http.Request) {
 	var task models.ToDoList
 	_ = json.NewDecoder(r.Body).Decode(&task)
 
-	insertOneTask(task)
+	insertOneTask(&task)
 	fmt.Println("Task Created 💙")
-	//sending response🚀
 
+	//sending response🚀
 	json.NewEncoder(w).Encode(task)
 
 }
@@ -171,10 +171,12 @@ func getAllTasks() []primitive.M {
 	}
 	return listOfTasks
 }
-func insertOneTask(task models.ToDoList) {
+func insertOneTask(task *models.ToDoList) {
 	//filtering using the _id
 	insertResult, err := collection.InsertOne(context.Background(), task)
 	checkNilError(err)
+
+	task.ID = insertResult.InsertedID.(primitive.ObjectID)
 
 	fmt.Println("Inserted one task 💙 with id: ", insertResult.InsertedID)
 
