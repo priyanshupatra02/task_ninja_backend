@@ -135,7 +135,7 @@ func DeleteATask(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Task is deleted 💙")
 
 	//sending response🚀
-	json.NewEncoder(w).Encode("Task" + params["id"] + " is deleted")
+	json.NewEncoder(w).Encode("Task " + params["id"] + " is deleted")
 
 }
 func DeleteAllTasks(w http.ResponseWriter, r *http.Request) {
