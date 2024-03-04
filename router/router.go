@@ -9,7 +9,7 @@ func Router() *mux.Router {
 	router := mux.NewRouter()
 
 	// get all tasks
-	router.HandleFunc("/api/task", middleware.GetAllTasks).Methods("GET", "OPTIONS")
+	router.HandleFunc("/api/getAllTasks", middleware.GetAllTasks).Methods("GET", "OPTIONS")
 	//create a task
 	router.HandleFunc("/api/task", middleware.CreateATask).Methods("POST", "OPTIONS")
 	//update a task
